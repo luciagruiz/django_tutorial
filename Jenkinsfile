@@ -11,7 +11,7 @@ pipeline {
             agent {
                 docker {
                     image 'python:3.12'
-		    args '-u root'
+                    args '-u root'
                 }
             }
             steps {
@@ -23,7 +23,6 @@ pipeline {
         }
 
         stage('Creación y subida de la imagen') {
-            agent { label 'docker' }
             steps {
                 script {
                     def newApp = docker.build("${IMAGEN}:${BUILD_NUMBER}")
