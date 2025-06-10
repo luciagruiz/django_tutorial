@@ -33,6 +33,22 @@ pipeline {
                 }
             }
         }
+
+        stage('Despliegue en el VPS') {
+            steps {
+                sshagent(credentials: ['kyogre']) {
+                    sh '''
+                        ssh -o StrictHostKeyChecking=no debian@kyogre.luciagruiz.com '
+                            cd django_tutorial &&
+                            git pull &&
+                            docker compose down &&
+                            docker compose pull &&
+                            docker compose up -d
+                        '
+                    '''
+                }
+            }
+        }
     }
 
     post {
