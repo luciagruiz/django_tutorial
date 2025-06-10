@@ -1,25 +1,50 @@
 pipeline {
-    agent {
-        docker { 
-            image 'python:3'
-            args '-u root:root'
+    agent none
+
+    environment {
+        IMAGEN = "luciagruiz/polls"
+        USUARIO = 'dockerhub-id'
+    }
+
+    stages {
+        stage('Test en contenedor') {
+            agent {
+                docker {
+                    image 'python:3.12'
+                }
+            }
+            steps {
+                sh '''
+                    pip install -r requirements.txt
+                    python manage.py test
+                '''
+            }
+        }
+
+        stage('Creación y subida de la imagen') {
+            agent { label 'docker' }
+            steps {
+                script {
+                    def newApp = docker.build("${IMAGEN}:${BUILD_NUMBER}")
+                    docker.withRegistry('', USUARIO) {
+                        newApp.push()
+                    }
+                    sh "docker rmi ${IMAGEN}:${BUILD_NUMBER}"
+                }
+            }
         }
     }
-    stages {
-        stage('Clone') {
-            steps {
-                git branch: 'master', url: 'https://github.com/josedom24/django_tutorial.git'
-            }
+
+    post {
+        success {
+            mail to: 'luciagruiz9@gmail.com',
+                 subject: 'Jenkins Pipeline Exitoso',
+                 body: "La ejecución del pipeline fue correcta. Build: ${env.BUILD_URL}"
         }
-        stage('Install') {
-            steps {
-                sh 'pip install -r requirements.txt'
-            }
-        }
-        stage('Test') {
-            steps {
-                sh 'python3 manage.py test'
-            }
+        failure {
+            mail to: 'luciagruiz9@gmail.com',
+                 subject: 'Jenkins Pipeline Fallido',
+                 body: "Ha fallado alguna etapa del pipeline. Revisa Jenkins: ${env.BUILD_URL}"
         }
     }
 }
