@@ -1,4 +1,6 @@
 pipeline {
+    agent any
+
     environment {
         IMAGEN = "luciagruiz/polls"
         USUARIO = 'dockerhub-id'
