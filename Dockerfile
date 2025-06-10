@@ -1,6 +1,6 @@
 FROM python:3.12.1-bookworm
 WORKDIR /usr/src/app
-COPY * .
+COPY * ./
 COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh \
 && pip install mysqlclient \
