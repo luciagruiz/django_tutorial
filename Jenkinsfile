@@ -41,9 +41,9 @@ pipeline {
                         ssh -o StrictHostKeyChecking=no debian@kyogre.luciagruiz.com '
                             cd django_tutorial &&
                             git pull &&
-                            docker compose down &&
-                            docker compose pull &&
-                            docker compose up -d
+                            docker-compose down &&
+                            docker-compose pull &&
+                            docker-compose up -d
                         '
                     '''
                 }
