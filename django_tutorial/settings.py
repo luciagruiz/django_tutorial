@@ -80,23 +80,23 @@ WSGI_APPLICATION = 'django_tutorial.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-#DATABASES = {
-#    'default': {
-#        'ENGINE': 'django.db.backends.sqlite3',
-#        'NAME': BASE_DIR / 'db.sqlite3',
-#    }
-#}
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-          'NAME': 'polls',
-          'USER': 'polls',
-          'PASSWORD': 'polls',
-          'HOST': 'localhost',
-          'PORT': '',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
+#DATABASES = {
+#    'default': {
+#        'ENGINE': 'django.db.backends.mysql',
+#          'NAME': 'polls',
+#          'USER': 'polls',
+#          'PASSWORD': 'polls',
+#          'HOST': 'localhost',
+#          'PORT': '',
+#    }
+#}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -140,5 +140,5 @@ DEFAULT_AUTO_FIELD='django.db.models.AutoField'
 
 #AÑADIDO
 
-CSRF_TRUSTED_ORIGINS = ["https://python.luciagruiz.com"]
+#CSRF_TRUSTED_ORIGINS = ["https://python.luciagruiz.com"]
 
